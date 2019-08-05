@@ -16,6 +16,14 @@ class ProjectsController extends Controller
 
 	}
 
+	public function show(Project $project) {
+
+		//$project = Project::findOrFail(request('project'));
+
+		return view('projects.show', compact('project'));
+		
+	}
+
 	public function store() {
 
 		//validate
@@ -28,4 +36,5 @@ class ProjectsController extends Controller
 		return redirect('/projects');
 
 	}
+
 }
