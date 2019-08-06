@@ -6,55 +6,40 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ProjectsTest extends TestCase
+class ManageProjectsTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
    /** @test **/
 
-    public function guests_cannot_create_projects() 
+    public function guests_cannot_manage_projects() 
     {
         //$this->withoutExceptionHandling();
-
-        //$attributes = factory('App\Project')->raw(['owner_id' => null]);
-        //$this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
-        $attributes = factory('App\Project')->raw();
-
-        $this->post('/projects', $attributes)->assertRedirect('login');
-
-    }
-
-   /** @test **/
-
-    public function guests_cannot_view_projects() 
-    {
-
-        $this->get('/projects')->assertRedirect('login');
-
-    }
-
-   /** @test **/
-
-    public function guests_cannot_view_a_single_projects() 
-    {
-
         $project = factory('App\Project')->create();
 
+        // cant create a project
+        $this->get('/projects/create')->assertRedirect('login');
+
+        // cant view project dashboard
+        $this->get('/projects')->assertRedirect('login');
+
+        // cant view a specific project
         $this->get($project->path())->assertRedirect('login');
+
+        // can't store a project
+        $this->post('/projects', $project->toArray())->assertRedirect('login');
 
     }
 
+    /** @test **/
 
-    /**
-     @test
-     */
-
-
-    public function guests_cannot_create_a_project()
+    public function a_user_can_create_a_project() 
     {
-
         //$this->withoutExceptionHandling();
+
         $this->actingAs(factory('App\User')->create());
+
+        $this->get('/projects/create')->assertStatus(200);
 
         $attributes = [
             'title' => $this->faker->sentence,
@@ -66,7 +51,6 @@ class ProjectsTest extends TestCase
         $this->assertDatabaseHas('projects', $attributes);
 
         $this->get('/projects')->assertSee($attributes['title']);
-
     }
 
     /** @test **/
