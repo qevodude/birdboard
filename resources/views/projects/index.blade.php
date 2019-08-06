@@ -2,22 +2,32 @@
 
 @section('content')
 
-	<div class="flex items-center py-3">
+	<header class="flex items-center mb-3 py-3">
 
-		<a href="/projects/create">New project</a>
+		<div class="flex justify-between items-center w-full">
 
-	</div>
+			<h2 class="text-gray-600 text-sm">My Projects</h2>
 
-	<div class="flex">
+			<a href="/projects/create"><button class="btn-blue">New project</button></a>
+
+		</div>
+
+	</header>
+
+	<main class="lg:flex lg:flex-wrap -mx-4">
 
 		@forelse ($projects as $project)
 
-			<div class="bg-white mr-4 p-5 rounded shadow w-1/3" style="height: 200px;">
+			<div class="lg:w-1/3 px-4 py-3 pb-3">
+				<div class="bg-white p-5 rounded-lg shadow" style="height: 200px;">
 
-				<h3 class="font-normal text-xl py-4">{{ $project->title }}</h3>
-		
-				<div class="text-gray-600">{{ str_limit($project->description, 100) }}</div>
+					<h3 class="font-normal text-xl py-4 -ml-5 border-l-4 border-blue-400 pl-4">
+						<a href="{{ $project->path() }} ">{{ str_limit($project->title, 20) }}</a>
+					</h3>
+			
+					<div class="text-gray-600">{{ str_limit($project->description, 100) }}</div>
 
+				</div>
 			</div>
 		
 		@empty
@@ -26,7 +36,7 @@
 
 		@endforelse
 
-	</div>
+	</main>
 
 	</ul>
 

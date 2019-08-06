@@ -627,6 +627,18 @@ video {
   }
 }
 
+.btn-blue {
+  background-color: #63b3ed;
+  color: #fff;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  box-shadow: 0 2px 7px 0 #b0eaff;
+}
+
 .appearance-none {
   -webkit-appearance: none;
      -moz-appearance: none;

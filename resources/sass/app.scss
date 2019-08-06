@@ -2,6 +2,11 @@
 
 @tailwind components;
 
+.btn-blue {
+	@apply .bg-blue-400 .text-white .text-sm .rounded-lg .py-2 .px-5;
+	box-shadow: 0 2px 7px 0 #b0eaff;
+}
+
 @tailwind utilities;
 
 // Fonts
