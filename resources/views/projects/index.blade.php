@@ -1,16 +1,13 @@
-<!DOCTYPE html>
+@extends('layouts.app')
 
-<html>
+@section('content')
 
-<head>
+	<div class="flex items-center">
 
-	<title></title>
+		<a href="/projects/create">New project</a>
 
-</head>
+	</div>
 
-<body>
-
-	<h1>Birdboard</h1>
 
 	<ul>
 
@@ -28,7 +25,4 @@
 
 	</ul>
 
-</body>
-
-</html>
-
+@endsection
