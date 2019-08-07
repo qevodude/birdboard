@@ -18,17 +18,12 @@
 
 		@forelse ($projects as $project)
 
-			<div class="lg:w-1/3 px-4 py-3 pb-3">
-				<div class="bg-white p-5 rounded-lg shadow" style="height: 200px;">
+		<div class="lg:w-1/3 px-4 py-3 pb-3">
 
-					<h3 class="font-normal text-xl py-4 -ml-5 border-l-4 border-blue-400 pl-4">
-						<a href="{{ $project->path() }} ">{{ str_limit($project->title, 20) }}</a>
-					</h3>
-			
-					<div class="text-gray-600">{{ str_limit($project->description, 100) }}</div>
+			@include ('projects.card')
 
-				</div>
-			</div>
+		</div>
+
 		
 		@empty
 
