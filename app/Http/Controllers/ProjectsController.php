@@ -49,14 +49,14 @@ class ProjectsController extends Controller
 		// Project::create($attributes);
 		// or
 		// Create a project for the authenticated user
-		auth()->user()->projects()->create($attributes);
+		$project = auth()->user()->projects()->create($attributes);
 
 		//dd($attributes);
 		//dd(auth()->user());
 
 
 		//redirect
-		return redirect('/projects');
+		return redirect($project->path());
 
 	}
 
