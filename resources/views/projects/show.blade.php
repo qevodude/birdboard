@@ -29,7 +29,11 @@
 
 					<h2 class="text-lg text-gray-600 font-normal mb-3">Tasks</h2>
 
-					<div class="card">Lorem ipsum</div>
+					@foreach ($project->tasks as $task) 
+
+						<div class="card mb-4" >{{ $task->body }}</div>
+
+					@endforeach
 
 				</div>
 
