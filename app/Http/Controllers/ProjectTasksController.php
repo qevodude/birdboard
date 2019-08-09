@@ -7,15 +7,21 @@ use App\Models\Task;
 
 class ProjectTasksController extends Controller
 {
-    //
+    /**
+     * Save a new task
+     * @param Project $project 
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
 
     public function store (Project $project)
     {
 
     	// prevent unauthed user from saving to DB
-    	if(auth()->user()->isNot($project->owner)){
-    		abort(403);
-    	}
+        $this->authorize('update', $project);
+    	//if(auth()->user()->isNot($project->owner)){
+    		//abort(403);
+    	//}
 
     	request()->validate(['body' => 'required']);
 
@@ -25,13 +31,22 @@ class ProjectTasksController extends Controller
 
     }
 
+    /**
+     * Update new task
+     * @param Project $project 
+     * @param Task $task 
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(Project $project, Task $task)
     {
 
+
         // prevent unauthed user from saving to DB
-        if(auth()->user()->isNot($project->owner)){
-            abort(403);
-        }
+        $this->authorize('update', $task->project);
+        //if(auth()->user()->isNot($task->project->owner)){
+            //abort(403);
+        //}
         
         request()->validate(['body' => 'required']);
 

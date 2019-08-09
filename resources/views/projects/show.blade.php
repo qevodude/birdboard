@@ -74,7 +74,21 @@
 					
 					<h2 class="text-lg text-gray-600 font-normal mb-3">General Notes</h2>
 
-					<textarea class="card w-full" style="min-height: 200px">Lorem Ipsum</textarea>
+					<form method="POST" action="{{ $project->path() }}">
+						@csrf
+						@method('PATCH')
+
+						<textarea name="notes"
+							class="card w-full" 
+							style="min-height: 200px" 
+							placeholder="Enter any notes here">
+								{{ $project->notes }}
+						</textarea>
+
+						<button type="submit" class="btn-blue">Save</button>
+						
+					</form>
+
 
 				</div>
 
