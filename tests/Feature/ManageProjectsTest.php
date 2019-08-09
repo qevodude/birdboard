@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\Project;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -49,7 +50,13 @@ class ManageProjectsTest extends TestCase
         $test_title = str_limit($attributes['title'], 20);
         $test_description = str_limit($attributes['description'], 100);
 
-        $this->post('/projects', $attributes)->assertRedirect('/projects');
+        //$this->post('/projects', $attributes)->assertRedirect('/projects');
+
+        $response = $this->post('/projects', $attributes);
+
+        $response->assertRedirect(Project::where($attributes)->first()->path());
+
+        //$response->assertRedirect($project->path());
 
         $this->assertDatabaseHas('projects', $attributes);
 

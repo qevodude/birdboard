@@ -17,7 +17,7 @@ class UserTest extends TestCase
     {
 
 
-    	$user = factory('App\User')->create();
+    	$user = factory('App\Models\User')->create();
 
     	$this->assertInstanceOf(Collection::class, $user->projects);
 

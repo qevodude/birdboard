@@ -36,8 +36,8 @@ class ProjectTasksTest extends TestCase
 
         $project = factory('App\Models\Project')->create();
 
-        $this->post($project->path() . '/tasks' , ['body' => 'Test task']);
-        //->assertStatus(403);
+        $this->post($project->path() . '/tasks' , ['body' => 'Test task'])
+        ->assertStatus(403);
 
         $this->assertDatabaseMissing('tasks', ['body' => 'Test task']);
 
@@ -45,6 +45,29 @@ class ProjectTasksTest extends TestCase
 
 
     }
+
+    /** @test */
+    public function only_the_project_owner_can_update_tasks ()
+    {
+
+        //$this->withoutExceptionHandling();
+
+        $this->signInAs();
+
+        $project = factory('App\Models\Project')->create();
+
+        $task = $project->addTask('test task');
+
+        $this->patch($task->path(), ['body' => 'Changed'])
+        ->assertStatus(403);
+
+        $this->assertDatabaseMissing('tasks', ['body' => 'Changed']);
+
+
+
+
+    }
+
 
 
     /** @test */
@@ -74,6 +97,32 @@ class ProjectTasksTest extends TestCase
 
     /** @test **/
 
+    public function a_task_can_be_updated() 
+    {
+
+        $this->withoutExceptionHandling();
+
+        $this->signInAs();
+
+        $project = auth()->user()->projects()->create(
+            factory(Project::class)->raw()
+        );
+
+        $task = $project->addTask('test task');
+
+        $this->patch($project->path() . '/tasks/' . $task->id, [
+            'body' => 'changed',
+            'completed' => true 
+        ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'body' => 'changed',
+            'completed' => true 
+        ]);
+
+    }
+    /** @test **/
+
     public function a_task_requires_a_body() 
     {
 
@@ -81,7 +130,7 @@ class ProjectTasksTest extends TestCase
 
         $project = factory(Project::class)->create(['owner_id' => auth()->id() ]);
 
-        $attributes = factory('App\Task')->raw(['body' => '']);
+        $attributes = factory('App\Models\Task')->raw(['body' => '']);
 
         $this->post($project->path() . '/tasks', $attributes)->assertSessionHasErrors('body');
 
