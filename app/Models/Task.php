@@ -10,6 +10,10 @@ class Task extends Model
 	protected $guarded = [];
 
 
+	// updates parent records
+	protected $touches = ['project'];
+
+
 	public function project() 
 	{
 
