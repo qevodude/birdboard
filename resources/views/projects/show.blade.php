@@ -82,12 +82,25 @@
 							class="card w-full"
 							style="min-height: 200px"
 							placeholder="Enter any notes here">
-								{{ $project->notes }}
+{{ $project->notes }}
 						</textarea>
 
 						<button type="submit" class="btn-blue">Save</button>
 
 					</form>
+
+                    @if($errors->any())
+                        <div class="field mt-6 text-red-600">
+
+                            @foreach($errors->all() as $error)
+
+                                <li>{{ $error }}</li>
+
+                            @endforeach
+
+                        </div>
+
+                    @endif
 
 
 				</div>
