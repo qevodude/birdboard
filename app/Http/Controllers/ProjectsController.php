@@ -20,7 +20,7 @@ class ProjectsController extends Controller
 
 	/**
 	 * Show a single project
-	 * @param Project $project 
+	 * @param Project $project
 	 * @return \Illuminate\Http\Response
 	 * @throws \Illuminate\Auth\Access\AuthorizationException
 	 */
@@ -38,7 +38,7 @@ class ProjectsController extends Controller
 		$this->authorize('update', $project);
 
 		return view('projects.show', compact('project'));
-		
+
 	}
 
 
@@ -65,34 +65,38 @@ class ProjectsController extends Controller
 
 		$this->authorize('update', $project);
 
-		$project->update(request(['notes']));
+        $project->update($this->validateRequest());
 
 		return redirect($project->path());
 
 	}
 
 
-	/**
-	 * Saves a new project
+    /**
+     * Displays edit form
+     */
+    public function edit(Project $project) {
+
+        return view('/projects.edit', compact('project'));
+
+    }
+
+
+    /**
+     * Saves a new project
 	 * @return \Illuminate\Http\Response
 	 */
-	
+
 	public function store() {
 
 		//validate
-		$attributes = request()->validate([
-			'title' => 'required', 
-			'description' => 'required',
-			'notes' => 'min:3'
-		]);
-
-		//$attributes['owner_id'] = auth()->id();
+        //$attributes['owner_id'] = auth()->id();
 
 		//persist
 		// Project::create($attributes);
 		// or
 		// Create a project for the authenticated user
-		$project = auth()->user()->projects()->create($attributes);
+		$project = auth()->user()->projects()->create($this->validateRequest());
 
 		//dd($attributes);
 		//dd(auth()->user());
@@ -102,5 +106,17 @@ class ProjectsController extends Controller
 		return redirect($project->path());
 
 	}
+
+    /**
+     * @return array
+     */
+    public function validateRequest()
+    {
+        return $attributes = request()->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'notes' => 'min:3'
+        ]);
+    }
 
 }

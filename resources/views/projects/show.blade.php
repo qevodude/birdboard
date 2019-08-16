@@ -13,7 +13,7 @@
 				</p>
 
 
-			<a href="/projects/create"><button class="btn-blue">New project</button></a>
+			<a href="{{ $project->path() . '/edit' }}"><button class="btn-blue">Edit project</button></a>
 
 		</div>
 
@@ -32,18 +32,18 @@
 						<div class="card mb-4" >
 
 							<form action="{{ $project->path() . '/tasks' }}" method="POST">
-								
+
 								@csrf
 
 								<input name="body" placeholder="Begin adding tasks..." class="w-full">
-								
+
 							</form>
 
 						</div>
 
 
 
-					@foreach ($project->tasks as $task) 
+					@foreach ($project->tasks as $task)
 
 						<div class="card mb-4" >
 
@@ -56,12 +56,12 @@
 								<div class="flex">
 
 									<input class="mt-1" type="checkbox" name="completed" onChange="this.form.submit()" {{ $task->completed ? 'checked' : '' }} >
-									
+
 									<input name="body" value=" {{ $task->body }} " class="w-full {{ $task->completed ? 'text-gray-600' : '' }} " >
 
 
 								</div>
-								
+
 							</form>
 						</div>
 
@@ -71,7 +71,7 @@
 				</div>
 
 				<div class="mb-8">
-					
+
 					<h2 class="text-lg text-gray-600 font-normal mb-3">General Notes</h2>
 
 					<form method="POST" action="{{ $project->path() }}">
@@ -79,14 +79,14 @@
 						@method('PATCH')
 
 						<textarea name="notes"
-							class="card w-full" 
-							style="min-height: 200px" 
+							class="card w-full"
+							style="min-height: 200px"
 							placeholder="Enter any notes here">
 								{{ $project->notes }}
 						</textarea>
 
 						<button type="submit" class="btn-blue">Save</button>
-						
+
 					</form>
 
 

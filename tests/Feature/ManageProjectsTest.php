@@ -23,6 +23,9 @@ class ManageProjectsTest extends TestCase
         // cant create a project
         $this->get('/projects/create')->assertRedirect('login');
 
+        // cant edit a project
+        $this->get($project->path().'/edit')->assertRedirect('login');
+
         // cant view project dashboard
         $this->get('/projects')->assertRedirect('login');
 
@@ -80,8 +83,11 @@ class ManageProjectsTest extends TestCase
         //$project = factory('App\Models\Project')->create(['owner_id' => auth()->id()]);
 
         $this->actingAs($project->owner)
-            ->patch($project->path(),$attributes = ['notes' => 'Changed'])
+            ->patch($project->path(),$attributes = ['title' => 'Changed', 'description' => 'Changed', 'notes' => 'Changed'])
             ->assertRedirect($project->path());
+
+        // assertOk same as assertStatus(200)
+        $this->get($project->path().'/edit')->assertOk();
 
         $this->assertDatabaseHas('projects', $attributes);
 
