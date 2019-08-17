@@ -9,7 +9,7 @@ class ProjectTasksController extends Controller
 {
     /**
      * Save a new task
-     * @param Project $project 
+     * @param Project $project
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -33,8 +33,8 @@ class ProjectTasksController extends Controller
 
     /**
      * Update new task
-     * @param Project $project 
-     * @param Task $task 
+     * @param Project $project
+     * @param Task $task
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -47,13 +47,14 @@ class ProjectTasksController extends Controller
         //if(auth()->user()->isNot($task->project->owner)){
             //abort(403);
         //}
-        
+
         request()->validate(['body' => 'required']);
 
-        $task->update([
-            'body' => request('body'),
-            'completed' => request()->has('completed')
-        ]);
+        $task->update(['body' => request('body')]);
+
+        if(request()->has('completed')) {
+            $task->complete();
+        }
 
         return redirect($project->path());
 
