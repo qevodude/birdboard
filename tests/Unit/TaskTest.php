@@ -60,4 +60,5 @@ class TaskTest extends TestCase
         $this->assertFalse($task->fresh()->completed);
 
     }
+
 }
