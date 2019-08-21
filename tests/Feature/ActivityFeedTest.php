@@ -58,7 +58,7 @@ class ActivityFeedTest extends TestCase
     function completing_a_task_records_project_activity()
     {
 
-        //$this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $project = ProjectFactory::withTasks(1)->create();
 
