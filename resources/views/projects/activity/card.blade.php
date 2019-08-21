@@ -10,7 +10,7 @@
 
 
                 <!-- the true removes 'ago' from the display.  See carbon.php for options -->
-                <span class="text-gray-700">{{ $activity->created_at->diffForHumans(null, true) }}</span>
+                <span class="text-gray-700">{{ $activity->created_at->diffForHumans(null, false) }}</span>
 
             </li>
 

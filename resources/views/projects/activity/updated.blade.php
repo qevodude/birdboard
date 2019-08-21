@@ -1,1 +1,1 @@
-You updated a task
+You updated a project
